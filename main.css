@@ -2,21 +2,41 @@ body {
     background-color: yellow;
 }
 
+h1 {
+    border: 5px solid black;
+    display: inline;
+    padding: 1px;
+    
+    
+}
+
 #container {
     display: grid;
-    grid-template-rows: 100px 100px 100px 100px 100px 100px 100px;
-    grid-template-columns: 100px 100px 100px 100px 100px 100px;
-    align-items: center;
+    grid-template-rows: 100px 100px 100px 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px;
+    margin: 0 auto;
     grid-gap: 5px;
+    background-color: #ee3c78;
+    background-size: 300px;
+    
     
 }
 
 .box {
     justify-content: center;
-    background-color: blue;
+    background-color: whitesmoke;
     border: 1px solid black;
     height: 100px;
     width: 100px;
-   border-radius: 50%;
+    border-radius: 50%;
+    align-items: right;
 
+}
+
+.red {
+    background-color: red !important;
+}
+
+.green {
+    background-color: green !important;
 }
