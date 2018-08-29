@@ -6,8 +6,8 @@ console.log("JS loaded.");
 
 document.turn = "Player 1";
 const container = document.getElementById('container');
-// const state = new Array(42).fill(0);
-const state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 1, 1, -1, 0, 0, 0]
+const state = new Array(42).fill(0);
+// const state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 1, 1, -1, 0, 0, 0]
 const boxes = document.querySelectorAll('.box');
 
 
