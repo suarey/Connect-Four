@@ -6,7 +6,8 @@ console.log("JS loaded.");
 
 document.turn = "Player 1";
 const container = document.getElementById('container');
-const state = new Array(42).fill(0);
+// const state = new Array(42).fill(0);
+const state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 1, 1, -1, 0, 0, 0]
 const boxes = document.querySelectorAll('.box');
 
 
@@ -35,38 +36,88 @@ function dropCircle(evt) {
 }
 
 /*
- *  UTILITY FUNCTIONS
+ *  UTILITY FUNCTIONS AND WIN LOGIC FUNCTIONS
  */
 
-// Figure out how to split array into 7 sub arrays
-// Run a for loop each sub array to check if there is 4 in a row.
-
-function chunkArray() {
-    // Specified how big we wanted the chunks.
-    let groupSize = 7;
-    
+function convertToMatrix(state) {
     return state
         .map((item, i) => { 
-            return i % groupSize === 0 ? state.slice(i, i + groupSize) : null; 
+            return i % 7 === 0 ? state.slice(i, i + 7) : null; 
         })
-        .filter(item => { return item; })
-
+        .filter(item => { return item; });
 }
 
-function checkHorizontally() {
-    let chunkedArray = chunkArray();
-    chunkedArray.forEach(function(row) {
-        let count = 0; 
-        row.forEach(function(element) {
+function checkHorizontally(state) {
+    let matrix = convertToMatrix(state);
+    for (let i=0; i<matrix.length; i++) {
+        let row = matrix[i];
+        let posCount = 0; 
+        let negCount = 0;
+        for (let col=0; col<row.length; col++) {
+            
+            let element = row[col];
+            
             if (element === 1) {
-                count++
+                negCount = 0;
+                posCount++;
+            } else if (element === -1) {
+                posCount = 0;
+                negCount++;
             } else {
-                count = 0;
+                posCount = 0; 
+                negCount = 0; 
             }
 
-            if (count === 4) alert("Player 1 won");
-        })
-    })
+            console.log(negCount);
+            if (posCount === 4) return 1;
+            if (negCount === 4) return -1;
+        }
+    }
+    return 0;
+}
+
+function checkVertically(state) {
+    let matrix = convertToMatrix(state);
+    for (let col=0; col<7; col++) {
+        let posCount = 0; 
+        let negCount = 0;
+        for (let row=0; row<6; row++) {
+            
+            let element = matrix[row][col];
+            
+            if (element === 1) {
+                negCount = 0;
+                posCount++;
+            } else if (element === -1) {
+                posCount = 0;
+                negCount++;
+            } else {
+                posCount = 0; 
+                negCount = 0; 
+            }
+
+            if (posCount === 4) return 1;
+            if (negCount === 4) return -1;
+        }
+    }
+    return 0;
+}
+
+// function checkDiagnol() {
+//     chunkedArray.forEach(function(diag) {
+//         let count = 0; 
+//         diag.forEach(function(element) {
+//             if (element === 1) {
+//                 count++
+//             } else {
+//                 count = 0;
+//             }
+
+//             if (count === 4) alert("Player 1 won");
+//         })
+// })
+// }
+
     // for (let i = 0; i < chunkedArray.length; i++) {
     //     if (state[i] === 1) {
     //         count++; 
@@ -80,7 +131,7 @@ function checkHorizontally() {
     //     };
 
     // }
-};
+
 
 function winner() {
     // Write code here
