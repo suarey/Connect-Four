@@ -1,5 +1,3 @@
-console.log("JS loaded.");
-
 /*
  *  CONSTANTS, STATE and CACHED DOM ELEMENTS
  */
@@ -7,15 +5,9 @@ console.log("JS loaded.");
 document.turn = "Player 1";
 const container = document.getElementById('container');
 const state = new Array(42).fill(0);
-// const state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 1, 1, -1, 0, 0, 0]
 const boxes = document.querySelectorAll('.box');
-const goBlank = document.getElementsByName('.reset');
-
-function goBlank() {
-   clearbox(i);
-
-}
-
+const gameStatus = document.querySelector('#game-status');
+const restart = document.querySelector('#restart');
 
 /*
  *  EVENT LISTENERS
@@ -23,6 +15,11 @@ function goBlank() {
 
 container.addEventListener('click', dropCircle);
 
+restart.addEventListener('click', function() {
+    console.log('restart');
+    state.forEach((item, idx) => state[idx] = 0);
+    render();
+})
 /*
  *  UTILITY FUNCTIONS
  */
@@ -36,7 +33,6 @@ function dropCircle(evt) {
             state[start] = document.turn === "Player 1" ? 1 : -1;
             document.turn = document.turn === "Player 1" ? "Player 2" : "Player 1";
             render();
-            checkHorizontally();
             return;
         }   
     } 
@@ -46,19 +42,15 @@ function dropCircle(evt) {
  *  UTILITY FUNCTIONS AND WIN LOGIC FUNCTIONS
  */
 
-function convertToMatrix(state) {
+function convertToMatrix() {
     return state
         .map((item, i) => { 
             return i % 7 === 0 ? state.slice(i, i + 7) : null; 
         })
         .filter(item => { return item; });
-
-        
-        
-        
 }
 
-function checkHorizontally(state) {
+function checkHorizontally() {
     let matrix = convertToMatrix(state);
     for (let i=0; i<matrix.length; i++) {
         let row = matrix[i];
@@ -87,7 +79,7 @@ function checkHorizontally(state) {
     return 0;
 }
 
-function checkVertically(state) {
+function checkVertically() {
     let matrix = convertToMatrix(state);
     for (let col=0; col<7; col++) {
         let posCount = 0; 
@@ -114,35 +106,32 @@ function checkVertically(state) {
     return 0;
 }
 
-// function checkDiagnol() {
-//     chunkedArray.forEach(function(diag) {
-//         let count = 0; 
-//         diag.forEach(function(element) {
-//             if (element === 1) {
-//                 count++
-//             } else {
-//                 count = 0;
-//             }
+function checkUpperRightDiagnol() {
+    let matrix = convertToMatrix(state);
+    for (var col = 0; col < 4; col++) {
+        for (var row = 5; row > 2; row--) {
+            console.log(row,col);
+            if (matrix[row][col] && matrix[row][col] === matrix[row-1][col+1] && matrix[row-1][col+1] === matrix[row-2][col+2] && matrix[row-2][col+2] === matrix[row-3][col+3]) {
+                return matrix[row][col];
+            }
+        }
+    }
+    return 0;
+}
 
-//             if (count === 4) alert("Player 1 won");
-//         })
-// })
-// }
-
-    // for (let i = 0; i < chunkedArray.length; i++) {
-    //     if (state[i] === 1) {
-    //         count++; 
-    //     } else {
-    //         count = 0;
-    //     }
-
-    //     if (count === 4) {
-    //         alert("Player 1 won");
-    //         break;
-    //     };
-
-    // }
-
+function checkUpperLeftDiagnol() {
+    let matrix = convertToMatrix(state);
+    for (var col = 6; col > 2; col--) {
+        for (var row = 5; row > 2; row--) {
+            console.log("row", row);
+            console.log("col", col);
+            if (matrix[row][col] && matrix[row][col] === matrix[row-1][col-1] && matrix[row-1][col-1] === matrix[row-2][col-2] && matrix[row-2][col-2] === matrix[row-3][col-3]) {
+                return matrix[row][col];
+            }
+        }
+    }
+    return 0;
+}
 
 function winner() {
     // Write code here
@@ -162,10 +151,19 @@ function winner() {
 
 function render() {
     for (let i=0; i<state.length; i++) {
+        let currentDomNode = boxes[i];
         if (state[i] !== 0) {
-            boxes[i].classList.add(state[i] === 1 ? "red": "green"); 
+            currentDomNode.classList.add(state[i] === 1 ? "red": "green"); 
+        } else {
+            if (currentDomNode.classList[2] === "red") {
+                currentDomNode.classList.remove("red");
+            }
+            if (currentDomNode.classList[2] === "green") {
+                currentDomNode.classList.remove("green");
+            }
         }
     }
+    gameStatus.innerText = document.turn + "'s Turn";
 }
 
 
