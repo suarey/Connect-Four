@@ -5,13 +5,13 @@ to get four of your colored checkers in a row
 either horizontally, vertically or diagonally.
 
 Project Planning:
-Initial designs for Connect Four:
-https://i.imgur.com/8SKYiZZ.png
+! [Initial designs for Connect Four:]
+(https://i.imgur.com/8SKYiZZ.png)
 
-https://i.imgur.com/7DVnIXJ.png 
+(https://i.imgur.com/7DVnIXJ.png)
 
 Here's the finished product: 
-https://i.imgur.com/ZrNjHbw.png
+(https://i.imgur.com/ZrNjHbw.png)
 
 Technologies used: 
 - HTML 
