@@ -28,6 +28,7 @@ container.addEventListener('click', dropCircle);
  */
 
 function dropCircle(evt) {
+    if (evt.target.id === "container") return; 
     let column = evt.target.classList[1].split("-")[1];
     let colBottomIdx = 35 + column;
     for (var start=colBottomIdx; start>=0; start-=7) {
