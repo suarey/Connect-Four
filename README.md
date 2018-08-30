@@ -4,14 +4,12 @@ Connect four is a game to win by being the first player
 to get four of your colored checkers in a row 
 either horizontally, vertically or diagonally.
 
-Project Planning:
-! [Initial designs for Connect Four:]
-(https://i.imgur.com/8SKYiZZ.png)
+Project Planning & Initial designs for Connect Four:
+![Initial designs for Connect Four:](https://i.imgur.com/8SKYiZZ.png)![](https://i.imgur.com/7DVnIXJ.png)
 
-(https://i.imgur.com/7DVnIXJ.png)
+Here's the finished product:
 
-Here's the finished product: 
-(https://i.imgur.com/ZrNjHbw.png)
+![Here's the finished product:](https://i.imgur.com/ZrNjHbw.png)
 
 Technologies used: 
 - HTML 
