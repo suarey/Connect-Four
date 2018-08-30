@@ -7,6 +7,7 @@ either horizontally, vertically or diagonally.
 Project Planning:
 Initial designs for Connect Four:
 https://i.imgur.com/8SKYiZZ.png
+
 https://i.imgur.com/7DVnIXJ.png 
 
 Here's the finished product: 
