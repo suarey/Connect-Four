@@ -8,6 +8,7 @@ const state = new Array(42).fill(0);
 const boxes = document.querySelectorAll('.box');
 const gameStatus = document.querySelector('#game-status');
 const restart = document.querySelector('#restart');
+let gameWinner = false;
 
 /*
  *  EVENT LISTENERS
@@ -16,21 +17,29 @@ const restart = document.querySelector('#restart');
 container.addEventListener('click', dropCircle);
 
 restart.addEventListener('click', function() {
-    console.log('restart');
     state.forEach((item, idx) => state[idx] = 0);
+    gameWinner = false;
     render();
 })
+
 /*
  *  UTILITY FUNCTIONS
  */
 
 function dropCircle(evt) {
+   
+    if (gameWinner) return;
     if (evt.target.id === "container") return; 
     let column = evt.target.classList[1].split("-")[1];
     let colBottomIdx = 35 + column;
     for (var start=colBottomIdx; start>=0; start-=7) {
         if (state[start] === 0) {
             state[start] = document.turn === "Player 1" ? 1 : -1;
+            if (winner()) {
+                render();
+                gameStatus.innerText = winner() === 1 ? "Player 1's Wins" : "Player 2 Wins";
+                return;
+            }
             document.turn = document.turn === "Player 1" ? "Player 2" : "Player 1";
             render();
             return;
@@ -71,7 +80,6 @@ function checkHorizontally() {
                 negCount = 0; 
             }
 
-            console.log(negCount);
             if (posCount === 4) return 1;
             if (negCount === 4) return -1;
         }
@@ -110,7 +118,6 @@ function checkUpperRightDiagnol() {
     let matrix = convertToMatrix(state);
     for (var col = 0; col < 4; col++) {
         for (var row = 5; row > 2; row--) {
-            console.log(row,col);
             if (matrix[row][col] && matrix[row][col] === matrix[row-1][col+1] && matrix[row-1][col+1] === matrix[row-2][col+2] && matrix[row-2][col+2] === matrix[row-3][col+3]) {
                 return matrix[row][col];
             }
@@ -123,8 +130,6 @@ function checkUpperLeftDiagnol() {
     let matrix = convertToMatrix(state);
     for (var col = 6; col > 2; col--) {
         for (var row = 5; row > 2; row--) {
-            console.log("row", row);
-            console.log("col", col);
             if (matrix[row][col] && matrix[row][col] === matrix[row-1][col-1] && matrix[row-1][col-1] === matrix[row-2][col-2] && matrix[row-2][col-2] === matrix[row-3][col-3]) {
                 return matrix[row][col];
             }
@@ -134,22 +139,23 @@ function checkUpperLeftDiagnol() {
 }
 
 function winner() {
-    // Write code here
-    // winner should look at state and determine if there's a winner
-    // if there are 4 in a row for P1 return 1; P2 return -1; else return 0
-    if (state.length === 4) {
-       return 1;
-        
-    } else if (state.length === 4) {
-        return -1;
-        
-    } else {
-        return 0;
+    if (Math.abs(checkHorizontally()) === 1) {
+        return checkHorizontally()
     }
-    
+    if (Math.abs(checkVertically()) === 1) {
+        return checkVertically()
+    }
+    if (Math.abs(checkUpperRightDiagnol()) === 1) {
+        return checkUpperRightDiagnol()
+    }
+    if (Math.abs(checkUpperLeftDiagnol()) === 1) {
+        return checkUpperLeftDiagnol()
+    }
+    return 0;
 }
 
 function render() {
+
     for (let i=0; i<state.length; i++) {
         let currentDomNode = boxes[i];
         if (state[i] !== 0) {
@@ -162,6 +168,11 @@ function render() {
                 currentDomNode.classList.remove("green");
             }
         }
+
+        if (winner()) {
+            gameWinner = true;
+        }
+
     }
     gameStatus.innerText = document.turn + "'s Turn";
 }
