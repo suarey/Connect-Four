@@ -9,6 +9,12 @@ const container = document.getElementById('container');
 const state = new Array(42).fill(0);
 // const state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 1, 1, -1, 0, 0, 0]
 const boxes = document.querySelectorAll('.box');
+const goBlank = document.getElementsByName('.reset');
+
+function goBlank() {
+   clearbox(i);
+
+}
 
 
 /*
@@ -45,6 +51,10 @@ function convertToMatrix(state) {
             return i % 7 === 0 ? state.slice(i, i + 7) : null; 
         })
         .filter(item => { return item; });
+
+        
+        
+        
 }
 
 function checkHorizontally(state) {
@@ -146,7 +156,7 @@ function winner() {
     } else {
         return 0;
     }
-
+    
 }
 
 function render() {
@@ -156,3 +166,5 @@ function render() {
         }
     }
 }
+
+
