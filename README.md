@@ -4,6 +4,8 @@ Connect four is a game to win by being the first player
 to get four of your colored checkers in a row 
 either horizontally, vertically or diagonally.
 
+Link to live site: https://suarey.github.io/Connect-Four/
+
 Project Planning & Initial designs for Connect Four:
 ![Initial designs for Connect Four:](https://i.imgur.com/8SKYiZZ.png)![](https://i.imgur.com/7DVnIXJ.png)
 
